@@ -121,6 +121,7 @@ cc.Class({
                     const block = this.blockNodeArr[y][x];
                     const blockComponent = block.getComponent('Block');
                     blockComponent.onDestroy();
+                    block.removeFromParent();
                 }
             }
         }
