@@ -139,5 +139,6 @@ cc.Class({
         this.knifeNode.angle = 0;
         this.removeAllKnifePrefab();
         this.knifeNodeList = [];
+        this.targetRotation = 2;
     }
 });
