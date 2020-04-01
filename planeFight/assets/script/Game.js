@@ -9,7 +9,12 @@ const Global = require('Global');
 const Utils = require('Utils');
 
 const BULLET_NODE_NAME = 'bullet';
-const ENEMY_NODE_NAME = 'enemy';
+
+const GameStatus = {
+    START: 'start',
+    PAUSE: 'pause',
+    END: 'end'
+};
 
 cc.Class({
     extends: cc.Component,
@@ -42,6 +47,10 @@ cc.Class({
         enemy3: {
             type: cc.Prefab,
             default: null
+        },
+        menu: {
+            type: cc.Node,
+            default: null
         }
     },
 
@@ -49,13 +58,15 @@ cc.Class({
 
     onLoad() {
         Global.game = this;
-
+        this.menu.zIndex = 10;
+        this.showMenu();
         const manager = cc.director.getCollisionManager();
         manager.enabled = true; //开启碰撞检测
         // manager.enabledDebugDraw = true; //显示碰撞检测区域
 
         this.bulletPool = new cc.NodePool();
         this.bulletDistance = this.bulletCount = 8;
+        this.heroStartPos = this.hero.position;
         this.hero.zIndex = 1;
         this.node.on(cc.Node.EventType.TOUCH_START, this.touchStart, this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE, this.touchMove, this);
@@ -64,14 +75,21 @@ cc.Class({
     },
 
     start() {
-        this.designSize = cc.view.getDesignResolutionSize();
+        this.designSize = {
+            width: cc.winSize.width || cc.view.getDesignResolutionSize().width,
+            height: cc.winSize.height
+        };
+        this.gameStatus = null;
     },
 
     update(dt) {
-        this.scrollBackground(dt);
-        this.updateBullet();
-        this.updateEnemy(dt, 1, 1);
-        this.updateEnemy(dt, 2, 3.5);
+        if (this.gameStatus === GameStatus.START) {
+            this.scrollBackground(dt);
+            this.updateBullet();
+            this.updateEnemy(dt, 1, 1);
+            this.updateEnemy(dt, 2, 3.5);
+            this.updateEnemy(dt, 3, 20.33);
+        }
     },
 
     onDestroy() {
@@ -79,6 +97,33 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this.touchMove, this);
         this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.touchCancel, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.touchEnd, this);
+    },
+
+    endGame() {
+        this.gameStatus = GameStatus.END;
+        this.node.children.forEach((element) => {
+            if (element.name.indexOf('enemy') !== -1) {
+                element.destroy();
+            }
+            if (element.name == BULLET_NODE_NAME) {
+                element.destroy();
+            }
+        });
+        this.hero.setPosition(this.heroStartPos);
+        this.showMenu();
+    },
+
+    showMenu() {
+        this.menu.active = true;
+    },
+
+    hideMenu() {
+        this.menu.active = false;
+    },
+
+    startClick() {
+        this.gameStatus = GameStatus.START;
+        this.hideMenu();
     },
 
     scrollBackground(dt) {
@@ -94,6 +139,9 @@ cc.Class({
     },
 
     touchMove(event) {
+        if (this.gameStatus !== GameStatus.START) {
+            return;
+        }
         const delta = event.getDelta();
         this.hero.x += delta.x;
         this.hero.y += delta.y;

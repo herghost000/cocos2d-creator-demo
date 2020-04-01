@@ -39,6 +39,10 @@ cc.Class({
         if (this.enemyTag === 2) {
             this.node.y -= 4;
         }
+
+        if (this.enemyTag === 3) {
+            this.node.y -= 1;
+        }
     },
 
     hit() {
@@ -64,15 +68,36 @@ cc.Class({
                 this.anim.play();
             }
         }
+
+        if (this.enemyTag === 3) {
+            if (++this.hitNum === 50) {
+                this.isDead = true;
+                this.hitNum = 0;
+                cc.audioEngine.play(this.brokenAudio, false, 1);
+                this.anim = this.node.getComponent(cc.Animation)
+                this.anim.on('finished', this.finished, this);
+                const brokenClip = this.getBrokenClip();
+                this.anim.play(brokenClip.name);
+            }
+        }
     },
 
     finished(type, state) {
         this.anim.off('finished', this.finished, this);
-        let curAniClip = this.anim.currentClip;
-        this.anim.setCurrentTime(0, curAniClip.name)
-        this.anim.sample(curAniClip.name);
+        const defaultClip = this.anim.defaultClip;
+        this.anim.setCurrentTime(0, defaultClip.name)
+        this.anim.sample(defaultClip.name);
+        if (this.enemyTag === 3) {
+            this.anim.play(defaultClip.name);
+        }
         Global.game.recyleEnemy(this.enemyTag, this.node);
         this.isDead = false;
+    },
+
+    getBrokenClip() {
+        const clips = this.anim.getClips();
+        const brokenClip = clips[clips.length - 1];
+        return brokenClip;
     },
 
     checkDead() {

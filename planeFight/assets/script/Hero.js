@@ -5,34 +5,46 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+const Global = require('Global');
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        brokenAudio: {
+            default: null,
+            type: cc.AudioClip
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
-    start () {
+    start() {
 
     },
 
     // update (dt) {},
+
+    onCollisionEnter(other, self) {
+        const enemy = other.node.getComponent('Enemy');
+        if (enemy && !enemy.checkDead()) {
+            this.anim = self.getComponent(cc.Animation);
+            const clips = this.anim.getClips();
+            const brokenClip = clips[clips.length - 1];
+            cc.audioEngine.play(this.brokenAudio, false, 1);
+            this.anim.on('finished', this.finished, this);
+            this.anim.play(brokenClip.name);
+        }
+    },
+
+    finished(type, state) {
+        this.anim.off('finished', this.finished, this);
+        const defaultClip = this.anim.defaultClip;
+        this.anim.setCurrentTime(0, defaultClip.name)
+        this.anim.sample(defaultClip.name);
+        this.anim.play(defaultClip.name);
+        Global.game.endGame();
+    },
 });

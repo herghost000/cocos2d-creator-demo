@@ -60,5 +60,12 @@ cc.Class({
             }
         }
 
+        if (other.tag === 3) {
+            if (enemy && !enemy.checkDead()) {
+                Global.game.recyleBullet(self.node);
+                enemy.hit();
+            }
+        }
+
     }
 });
