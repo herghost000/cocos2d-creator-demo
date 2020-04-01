@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "enemy2Borken",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.43333333333333335,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "cfdbbfa2-973e-43a7-a9ee-d9425bed312f"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "ddcf7bb8-6d60-44b7-b0f3-f06f27d214ca"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "0b820245-c5e0-4351-ab32-4ebd2ddc7d14"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "3925d3ec-2ffa-4940-9876-e788fd956395"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "f4aa5b9a-b91e-40a2-8af3-07bd1f0ada85"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "9ce2d4a8-4a42-4e6c-9746-5c0a8b4d8769"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

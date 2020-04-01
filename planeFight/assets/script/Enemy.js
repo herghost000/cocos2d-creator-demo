@@ -24,7 +24,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-
+        this.hitNum = 0;
     },
 
     start() {
@@ -32,14 +32,19 @@ cc.Class({
     },
 
     update(dt) {
-        this.node.y -= 5;
+        if (this.enemyTag === 1) {
+            this.node.y -= 5;
+        }
+
+        if (this.enemyTag === 2) {
+            this.node.y -= 4;
+        }
     },
 
     hit() {
         if (this.checkDead()) {
             return;
         }
-        this.isDead = true;
 
         if (this.enemyTag === 1) {
             this.isDead = true;
@@ -47,6 +52,17 @@ cc.Class({
             this.anim = this.node.getComponent(cc.Animation)
             this.anim.on('finished', this.finished, this);
             this.anim.play();
+        }
+
+        if (this.enemyTag === 2) {
+            if (++this.hitNum === 6) {
+                this.isDead = true;
+                this.hitNum = 0;
+                cc.audioEngine.play(this.brokenAudio, false, 1);
+                this.anim = this.node.getComponent(cc.Animation)
+                this.anim.on('finished', this.finished, this);
+                this.anim.play();
+            }
         }
     },
 

@@ -901,7 +901,9 @@
     "enemy1": {
       "__uuid__": "b539f8c8-663c-4e62-98d3-d2577fde58f3"
     },
-    "enemy2": null,
+    "enemy2": {
+      "__uuid__": "8a1efe6d-9411-4895-8dd2-590c97e9b3eb"
+    },
     "enemy3": null,
     "_id": "1e+/TuDFJCsbRB77Vn3Oy+"
   }

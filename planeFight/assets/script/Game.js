@@ -52,7 +52,7 @@ cc.Class({
 
         const manager = cc.director.getCollisionManager();
         manager.enabled = true; //开启碰撞检测
-        manager.enabledDebugDraw = true; //显示碰撞检测区域
+        // manager.enabledDebugDraw = true; //显示碰撞检测区域
 
         this.bulletPool = new cc.NodePool();
         this.bulletDistance = this.bulletCount = 8;
@@ -70,7 +70,8 @@ cc.Class({
     update(dt) {
         this.scrollBackground(dt);
         this.updateBullet();
-        this.updateEnemy(dt, 1, 1.2);
+        this.updateEnemy(dt, 1, 1);
+        this.updateEnemy(dt, 2, 3.5);
     },
 
     onDestroy() {
