@@ -16,6 +16,14 @@ const GameStatus = {
     END: 'end'
 };
 
+const UfoTag = {
+    ULT: 1
+};
+
+const UfoName = {
+    ULT: 'Ult'
+};
+
 cc.Class({
     extends: cc.Component,
 
@@ -59,6 +67,10 @@ cc.Class({
         ufoUlt: {
             type: cc.Prefab,
             default: null
+        },
+        score: {
+            type: cc.Label,
+            default: null
         }
     },
 
@@ -66,7 +78,7 @@ cc.Class({
 
     onLoad() {
         Global.game = this;
-
+        this.clearScore();
         this.disableUltBtn();
         this.menu.zIndex = 10;
         this.showMenu();
@@ -100,7 +112,7 @@ cc.Class({
             this.updateEnemy(dt, 1, 1);
             this.updateEnemy(dt, 2, 3.5);
             this.updateEnemy(dt, 3, 20.33);
-            this.updateUfo(dt, 'Ult', 60.7);
+            this.updateUfo(dt, UfoName.ULT, 10.7);
         }
     },
 
@@ -109,6 +121,14 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this.touchMove, this);
         this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.touchCancel, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.touchEnd, this);
+    },
+
+    addScore(num) {
+        this.score.string = this.scoreNum = this.scoreNum + num;
+    },
+
+    clearScore() {
+        this.score.string = this.scoreNum = 0;
     },
 
     ultClick() {
@@ -132,6 +152,7 @@ cc.Class({
             }
         });
         this.hero.setPosition(this.heroStartPos);
+        this.clearScore();
         this.showMenu();
     },
 

@@ -7,7 +7,7 @@
 const Global = require('Global');
 
 const UfoTag = {
-    Ult: 1
+    ULT: 1
 };
 
 const UfoName = {
@@ -37,8 +37,8 @@ cc.Class({
     },
 
     hit() {
-        if (this.ufoTag === UfoTag.Ult) {
-            Global.game.recyleUfo('Ult', this.node);
+        if (this.ufoTag === UfoTag.ULT) {
+            Global.game.recyleUfo(UfoName.ULT, this.node);
             Global.game.enableUltBtn();
         }
     }

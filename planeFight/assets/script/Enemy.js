@@ -33,7 +33,7 @@ cc.Class({
 
     update(dt) {
         if (this.enemyTag === 1) {
-            this.node.y -= 5;
+            this.node.y -= 10;
         }
 
         if (this.enemyTag === 2) {
@@ -89,6 +89,15 @@ cc.Class({
             this.anim.play(defaultClip.name);
         }
         Global.game.recyleEnemy(this.enemyTag, this.node);
+        if (this.enemyTag === 1) {
+            Global.game.addScore(1);
+        }
+        if (this.enemyTag === 2) {
+            Global.game.addScore(5);
+        }
+        if (this.enemyTag === 3) {
+            Global.game.addScore(10);
+        }
         this.isDead = false;
     },
 
