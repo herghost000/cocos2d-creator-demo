@@ -51,6 +51,14 @@ cc.Class({
         menu: {
             type: cc.Node,
             default: null
+        },
+        ultButton: {
+            type: cc.Button,
+            default: null
+        },
+        ufoUlt: {
+            type: cc.Prefab,
+            default: null
         }
     },
 
@@ -58,8 +66,11 @@ cc.Class({
 
     onLoad() {
         Global.game = this;
+
+        this.disableUltBtn();
         this.menu.zIndex = 10;
         this.showMenu();
+
         const manager = cc.director.getCollisionManager();
         manager.enabled = true; //开启碰撞检测
         // manager.enabledDebugDraw = true; //显示碰撞检测区域
@@ -89,6 +100,7 @@ cc.Class({
             this.updateEnemy(dt, 1, 1);
             this.updateEnemy(dt, 2, 3.5);
             this.updateEnemy(dt, 3, 20.33);
+            this.updateUfo(dt, 'Ult', 60.7);
         }
     },
 
@@ -97,6 +109,16 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this.touchMove, this);
         this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.touchCancel, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.touchEnd, this);
+    },
+
+    ultClick() {
+        this.node.children.forEach((element) => {
+            if (element.name.indexOf('enemy') !== -1) {
+                const enemy = element.getComponent('Enemy');
+                enemy.deadHandler && enemy.deadHandler();
+            }
+        });
+        this.disableUltBtn();
     },
 
     endGame() {
@@ -111,6 +133,14 @@ cc.Class({
         });
         this.hero.setPosition(this.heroStartPos);
         this.showMenu();
+    },
+
+    enableUltBtn() {
+        this.ultButton.interactable = true;
+    },
+
+    disableUltBtn() {
+        this.ultButton.interactable = false;
     },
 
     showMenu() {
@@ -157,11 +187,54 @@ cc.Class({
 
     },
 
-    updateEnemy(dt, tag, enemyDuration) {
+    updateUfo(dt, name, duration) {
+        if (!this[`ufo${name}Timer`]) {
+            this[`ufo${name}Timer`] = 0;
+        }
+        if (this[`ufo${name}Timer`] >= duration) {
+            this[`ufo${name}Timer`] = 0;
+            this.createUfo(name);
+            this.ufoCrossHandler(name);
+        }
+        this[`ufo${name}Timer`] += dt;
+    },
+
+    createUfo(name) {
+        let ufo = null;
+        if (!this[`ufo${name}Pool`]) {
+            this[`ufo${name}Pool`] = new cc.NodePool();
+        }
+        if (this[`ufo${name}Pool`].size() > 0) { // 通过 size 接口判断对象池中是否有空闲的对象
+            ufo = this[`ufo${name}Pool`].get();
+        } else { // 如果没有空闲对象，也就是对象池中备用对象不够时，我们就用 cc.instantiate 重新创建
+            ufo = cc.instantiate(this[`ufo${name}`]);
+        }
+        this.node.addChild(ufo);
+        ufo.name = `ufo${name}`;
+        const leftX = -(this.designSize.width / 2) + ufo.width / 2;
+        const rightX = this.designSize.width / 2 - ufo.width / 2;
+        ufo.setPosition(cc.v2(Utils.randomNum(leftX, rightX), (this.designSize.height / 2 + ufo.height / 2)));
+    },
+
+    recyleUfo(name, ufo) {
+        this[`ufo${name}Pool`].put(ufo);
+    },
+
+    ufoCrossHandler(name) {
+        this.node.children.forEach(element => {
+            if (element.name === `ufo${name}`) {
+                if (element.y <= -(this.designSize.height / 2) - element.height / 2) {
+                    this.recyleUfo(name, element);
+                }
+            }
+        });
+    },
+
+    updateEnemy(dt, tag, duration) {
         if (!this[`enemy${tag}Timer`]) {
             this[`enemy${tag}Timer`] = 0;
         }
-        if (this[`enemy${tag}Timer`] >= enemyDuration) {
+        if (this[`enemy${tag}Timer`] >= duration) {
             this[`enemy${tag}Timer`] = 0;
             this.createEnemy(tag);
             this.enemyCrossHandler(tag);

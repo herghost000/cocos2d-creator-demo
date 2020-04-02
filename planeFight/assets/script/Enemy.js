@@ -51,35 +51,33 @@ cc.Class({
         }
 
         if (this.enemyTag === 1) {
-            this.isDead = true;
-            cc.audioEngine.play(this.brokenAudio, false, 1);
-            this.anim = this.node.getComponent(cc.Animation)
-            this.anim.on('finished', this.finished, this);
-            this.anim.play();
+            this.deadHandler();
         }
 
         if (this.enemyTag === 2) {
             if (++this.hitNum === 6) {
-                this.isDead = true;
-                this.hitNum = 0;
-                cc.audioEngine.play(this.brokenAudio, false, 1);
-                this.anim = this.node.getComponent(cc.Animation)
-                this.anim.on('finished', this.finished, this);
-                this.anim.play();
+                this.deadHandler();
             }
         }
 
         if (this.enemyTag === 3) {
             if (++this.hitNum === 50) {
-                this.isDead = true;
-                this.hitNum = 0;
-                cc.audioEngine.play(this.brokenAudio, false, 1);
-                this.anim = this.node.getComponent(cc.Animation)
-                this.anim.on('finished', this.finished, this);
-                const brokenClip = this.getBrokenClip();
-                this.anim.play(brokenClip.name);
+                this.deadHandler();
             }
         }
+    },
+
+    deadHandler() {
+        if (this.checkDead()) {
+            return;
+        }
+        this.isDead = true;
+        this.hitNum = 0;
+        cc.audioEngine.play(this.brokenAudio, false, 1);
+        this.anim = this.node.getComponent(cc.Animation)
+        this.anim.on('finished', this.finished, this);
+        const brokenClip = this.getBrokenClip();
+        this.anim.play(brokenClip.name);
     },
 
     finished(type, state) {

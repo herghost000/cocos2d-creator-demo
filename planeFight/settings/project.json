@@ -4,7 +4,8 @@
     "hero",
     "wall",
     "enemy",
-    "bullet"
+    "bullet",
+    "ufo"
   ],
   "collision-matrix": [
     [
@@ -14,6 +15,8 @@
       false,
       false,
       true,
+      true,
+      null,
       true
     ],
     [
@@ -33,6 +36,14 @@
       false,
       false,
       true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
       false
     ]
   ],
@@ -61,6 +72,5 @@
     "live": {
       "enable": false
     }
-  },
-  "start-scene": "current"
+  }
 }

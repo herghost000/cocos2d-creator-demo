@@ -28,15 +28,22 @@ cc.Class({
     // update (dt) {},
 
     onCollisionEnter(other, self) {
-        const enemy = other.node.getComponent('Enemy');
+        const enemy = other.getComponent('Enemy');
+        const ufo = other.getComponent('Ufo');
         if (enemy && !enemy.checkDead()) {
-            this.anim = self.getComponent(cc.Animation);
-            const clips = this.anim.getClips();
-            const brokenClip = clips[clips.length - 1];
-            cc.audioEngine.play(this.brokenAudio, false, 1);
-            this.anim.on('finished', this.finished, this);
-            this.anim.play(brokenClip.name);
+            this.playHeroDeadAnim()
         }
+        cc.log(ufo)
+        ufo && ufo.hit();
+    },
+
+    playHeroDeadAnim() {
+        this.anim = this.getComponent(cc.Animation);
+        const clips = this.anim.getClips();
+        const brokenClip = clips[clips.length - 1];
+        cc.audioEngine.play(this.brokenAudio, false, 1);
+        this.anim.on('finished', this.finished, this);
+        this.anim.play(brokenClip.name);
     },
 
     finished(type, state) {
