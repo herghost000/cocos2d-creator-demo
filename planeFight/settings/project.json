@@ -72,5 +72,6 @@
     "live": {
       "enable": false
     }
-  }
+  },
+  "start-scene": "current"
 }

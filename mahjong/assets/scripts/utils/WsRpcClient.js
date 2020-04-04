@@ -13,25 +13,27 @@ var Buffer = require("buffer/").Buffer
 var UnitTools = require("UnitTools");
 var EventEmitter = require("EventEmitter");
 var MessagePack = require("msgpack-lite");
+
 function WsRpcClient() {
     var self = this;
     this.client = null;
     this.url = null;
     this.rpc = {};
-    this.proxy = {};//clientProxy
+    this.proxy = {}; //clientProxy
     this.proxyDes = null;
     this.serverCb = {};
     this.isReady = false;
     this.readyCb = [];
     this.describe = null;
     this.events = new EventEmitter();
-    this.cbTimeOut =  10000;//默认15秒就算超时了，然后通知回调函数{ok:false}
+    this.cbTimeOut = 10000; //默认15秒就算超时了，然后通知回调函数{ok:false}
     this.cbInterval = null;
     this.isReconnected = true;
-    this.haveConnectd = false;//已经连接过了
-    this.heartBeatInterval = null;//心跳检测周期
-    this.enbleHeartBeat = true;//是否开启心跳检测
+    this.haveConnectd = false; //已经连接过了
+    this.heartBeatInterval = null; //心跳检测周期
+    this.enbleHeartBeat = true; //是否开启心跳检测
 }
+WsRpcClient.prototype.a = MessagePack
 //starServer
 WsRpcClient.prototype.connect = function (url) {
     var self = this;
@@ -69,7 +71,7 @@ WsRpcClient.prototype.connect = function (url) {
 
 
 
-WsRpcClient.prototype.startConnectUntilConnected = function (url) {//开始连接直到连接成功，只有在第一次连接的时候生效
+WsRpcClient.prototype.startConnectUntilConnected = function (url) { //开始连接直到连接成功，只有在第一次连接的时候生效
     var self = this;
     this.url = url;
     this.client = new WebSocket(this.url);
@@ -83,7 +85,7 @@ WsRpcClient.prototype.startConnectUntilConnected = function (url) {//开始连�
     }
     this.client.onclose = function (evt) {
         self.stopCbTimeOut();
-        if (self.isReady == true) {//如果刚开始 连接
+        if (self.isReady == true) { //如果刚开始 连接
             self.events.emit("onClose", self);
             self.isReady = false;
         }
@@ -108,12 +110,12 @@ WsRpcClient.prototype.startConnectUntilConnected = function (url) {//开始连�
 WsRpcClient.prototype.startHeartCheck = function () {
     var self = this;
     this.heartBeatInterval = setInterval(function () {
-        if(self.haveConnectd == false)return;
-        if(self.isReady == false)return;//如果isReady为false的话，刚开始连接，或者是已经断开连接了
+        if (self.haveConnectd == false) return;
+        if (self.isReady == false) return; //如果isReady为false的话，刚开始连接，或者是已经断开连接了
         self.onReady(function (client) {
             //发送心跳包
             client.proxy.heartBeat(function (data) {
-                if(!data.ok){
+                if (!data.ok) {
                     cc.log("没有收到心跳包！判定断线");
                     clearInterval(self.heartBeatInterval);
                     self.clearSocket();
@@ -124,11 +126,11 @@ WsRpcClient.prototype.startHeartCheck = function () {
                 }
             })
         })
-    },11000);
+    }, 11000);
 }
 
 WsRpcClient.prototype.clearSocket = function () {
-    if (!this.client)return;
+    if (!this.client) return;
     this.client.onopen = null;
     this.client.onmessage = null;
     this.client.onclose = null;
@@ -142,13 +144,15 @@ WsRpcClient.prototype.close = function () {
 }
 //获得可以调用函数的列表
 WsRpcClient.prototype.getDescribeList = function () {
-    if (this.describe == null)this.describe = {};
+    if (this.describe == null) this.describe = {};
     else {
         return this.describe;
     }
     var self = this;
     UnitTools.forEach(this.rpc, function (key, value) {
-        self.describe[key] = {args: value.length - 1};//length-1 not need the cb arg
+        self.describe[key] = {
+            args: value.length - 1
+        }; //length-1 not need the cb arg
     });
     return this.describe;
 }
@@ -177,9 +181,9 @@ WsRpcClient.prototype.handleDescribe = function (client, data) {
     this.startCbTimeOut();
     this.isReady = true;
     this.haveConnectd = true;
-    if(this.enbleHeartBeat){
+    if (this.enbleHeartBeat) {
         cc.log("居然开启心跳包了");
-        this.startHeartCheck();//心跳包检测
+        this.startHeartCheck(); //心跳包检测
     }
     this.events.emit("onReady", this);
     this.events.removeEvent("onReady");
@@ -189,13 +193,13 @@ WsRpcClient.prototype.handleMessage = function (client, message) {
     var data = this.parseDataToJson(message);
     var type = data.type;
     switch (type) {
-        case  1://describe
+        case 1: //describe
             this.handleDescribe(client, data.data);
             break;
-        case  2://call function
+        case 2: //call function
             this.runActionWithRawMessage(client, data.data);
             break;
-        case 3://callback
+        case 3: //callback
             this.handleCb(client, data.data);
             break;
     }
@@ -207,11 +211,10 @@ WsRpcClient.prototype.handleCb = function (client, data) {
     if (UnitTools.hasKey(this.serverCb, cbID)) {
         try {
             this.serverCb[cbID].cb(cbData);
-            UnitTools.remove(this.serverCb, cbID);//delete call back
-        }
-        catch (e) {
+            UnitTools.remove(this.serverCb, cbID); //delete call back
+        } catch (e) {
             cc.log(e.stack);
-            UnitTools.remove(this.serverCb, cbID);//delete call back
+            UnitTools.remove(this.serverCb, cbID); //delete call back
         }
 
     }
@@ -246,7 +249,9 @@ WsRpcClient.prototype.sendDescribe = function (client) {
     var names = this.getDescribeList();
     var sendData = {};
     sendData.type = 1;
-    sendData.data = {des: names};
+    sendData.data = {
+        des: names
+    };
     this.sendRawData(client, sendData);
 }
 
@@ -264,7 +269,7 @@ WsRpcClient.prototype.runAction = function (client, actionName, args, callbackID
     }
     args.push(function (cbData) {
         //tell the client cb Data
-        if (callbackID == 0)return;//cbID is 0 means no client no callback
+        if (callbackID == 0) return; //cbID is 0 means no client no callback
         self.sendCallbackData(client, cbData, callbackID);
     });
     this.rpc[actionName].apply(this, args);
@@ -278,8 +283,7 @@ WsRpcClient.prototype.runServerAction = function (an) {
     if (cbID == 0 && !this.checkRunActionArgNums(an, length - 1)) {
         cc.log("server func " + "no callback need " + this.getServerFuncArgNum(an) + " args");
         return
-    }
-    else if (cbID != 0 && !this.checkRunActionArgNums(an, length - 2)) {
+    } else if (cbID != 0 && !this.checkRunActionArgNums(an, length - 2)) {
         cc.log("server func " + an + " need " + this.getServerFuncArgNum(an) + " args");
         return;
     }
@@ -289,7 +293,10 @@ WsRpcClient.prototype.runServerAction = function (an) {
     sendData.args = Array.prototype.slice.call(arguments, 1, length - 1 + !cbID);
     sendData.an = arguments[0];
     if (sendData.cbID != 0) {
-        this.serverCb[sendData.cbID] = {cb: cb, time: UnitTools.now()};
+        this.serverCb[sendData.cbID] = {
+            cb: cb,
+            time: UnitTools.now()
+        };
     }
     this.sendActionData(this.client, sendData);
 }
@@ -308,7 +315,7 @@ WsRpcClient.prototype.jsonDataToSend = function (data) {
 
 
 WsRpcClient.prototype.checkRunActionArgNums = function (an, argNums) {
-    if (this.proxyDes[an].args != argNums)return false;
+    if (this.proxyDes[an].args != argNums) return false;
     return true;
 }
 
@@ -318,17 +325,15 @@ WsRpcClient.prototype.onReady = function (callback) {
         this.isReady = false;
         this.events.on("onReady", callback);
         return;
-    }
-    else {
+    } else {
         callback(this);
     }
 }
 
-WsRpcClient.prototype.onReadyState = function(cb){
+WsRpcClient.prototype.onReadyState = function (cb) {
     if (this.isReady == false || this.client.readyState != 1) {
         cb(false);
-    }
-    else {
+    } else {
         cb(true);
     }
 }
@@ -355,12 +360,14 @@ WsRpcClient.prototype.startCbTimeOut = function () {
                 rmA.push(key);
             }
         });
-        if (rmA.length == 0)return;
+        if (rmA.length == 0) return;
         UnitTools.forEach(rmA, function (key, value) {
-            try{
-                self.serverCb[value].cb({ok:false})
+            try {
+                self.serverCb[value].cb({
+                    ok: false
+                })
                 cc.log("调用超时!");
-            }catch(e){
+            } catch (e) {
 
             }
             UnitTools.remove(self.serverCb, value);
@@ -370,13 +377,15 @@ WsRpcClient.prototype.startCbTimeOut = function () {
 
 WsRpcClient.prototype.stopCbTimeOut = function () {
     //所有等待回调的函数，都通知为false，因为断开连接了
-    UnitTools.forEach(this.serverCb,function (key,value) {
-       try{
-           value.cb({ok:false});
-           cc.log("连接关闭了，但是还没调用!");
-       }catch(e){
+    UnitTools.forEach(this.serverCb, function (key, value) {
+        try {
+            value.cb({
+                ok: false
+            });
+            cc.log("连接关闭了，但是还没调用!");
+        } catch (e) {
 
-       }
+        }
     });
     clearInterval(this.cbInterval);
 }
