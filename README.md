@@ -1,3 +1,5 @@
 # cocos2d-creator-demo
 Cocos Creator项目demo集合
-- [x] https://www.luotian.xin/cocos2d-creator-demo/这里输入项目文件夹名（例如jigsaw）/build/web-mobile/index.html
+🔪 飞刀项目   https://www.luotian.xin/cocos2d-creator-demo/flyKnife/build/web-mobile/index.html
+🌃 拼图项目    https://www.luotian.xin/cocos2d-creator-demo/jigsaw/build/web-mobile/index.html
+🛫 飞机项目 https://www.luotian.xin/cocos2d-creator-demo/planeFight/build/web-mobile/index.html
