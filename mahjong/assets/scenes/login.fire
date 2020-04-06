@@ -78,13 +78,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 153
+        "__id__": 156
       },
       {
-        "__id__": 154
+        "__id__": 157
       },
       {
-        "__id__": 155
+        "__id__": 158
       }
     ],
     "_prefab": null,
@@ -252,15 +252,18 @@
       },
       {
         "__id__": 21
+      },
+      {
+        "__id__": 151
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 151
+        "__id__": 154
       },
       {
-        "__id__": 152
+        "__id__": 155
       }
     ],
     "_prefab": null,
@@ -6541,6 +6544,138 @@
     },
     "_enabled": true,
     "_id": "ed4+rSRXtMDZaRISC53YiK"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "effect_hall_girl_ske",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 5
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 152
+      },
+      {
+        "__id__": 153
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 1325.7,
+      "height": 1274.36
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        -392.7869999999999,
+        -114.637,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0.466,
+        0.466,
+        0.466
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "baO371FYREnrHDKK/YxGfS"
+  },
+  {
+    "__type__": "dragonBones.ArmatureDisplay",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 151
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_armatureName": "ermj_effect_hall_girl",
+    "_animationName": "newAnimation",
+    "_preCacheMode": 2,
+    "_cacheMode": 2,
+    "playTimes": -1,
+    "premultipliedAlpha": false,
+    "_armatureKey": "6791e20e-6a8e-4f69-ae06-328c505a0007#99f86fb3-49eb-4dc7-b961-bf378ec665e7",
+    "_accTime": 0,
+    "_playCount": 0,
+    "_frameCache": null,
+    "_curFrame": null,
+    "_playing": false,
+    "_armatureCache": null,
+    "_N$dragonAsset": {
+      "__uuid__": "6791e20e-6a8e-4f69-ae06-328c505a0007"
+    },
+    "_N$dragonAtlasAsset": {
+      "__uuid__": "99f86fb3-49eb-4dc7-b961-bf378ec665e7"
+    },
+    "_N$_defaultArmatureIndex": 0,
+    "_N$_animationIndex": 1,
+    "_N$_defaultCacheMode": 2,
+    "_N$timeScale": 1,
+    "_N$debugBones": false,
+    "_N$enableBatch": false,
+    "_id": "e3sBWLL+ZPXZADdK734WbX"
+  },
+  {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 151
+    },
+    "_enabled": true,
+    "alignMode": 1,
+    "_target": null,
+    "_alignFlags": 45,
+    "_left": -61.67509999999993,
+    "_right": 723.8988999999999,
+    "_top": 177.71112,
+    "_bottom": -51.56288000000001,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 1325.7,
+    "_originalHeight": 1274.36,
+    "_id": "a2KC4zB01OuINqkbZlnnwP"
   },
   {
     "__type__": "cc.Sprite",
