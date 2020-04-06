@@ -1,0 +1,61 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "room3_mahjong",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 22,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            42.191,
+            38.121,
+            0
+          ]
+        },
+        {
+          "frame": 1,
+          "value": [
+            45.104,
+            40.618,
+            0
+          ]
+        }
+      ]
+    },
+    "paths": {
+      "Font": {
+        "props": {
+          "color": [
+            {
+              "frame": 0,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 0,
+                "g": 151,
+                "b": 6,
+                "a": 255
+              }
+            },
+            {
+              "frame": 1,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 5,
+                "g": 255,
+                "b": 45,
+                "a": 255
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}
