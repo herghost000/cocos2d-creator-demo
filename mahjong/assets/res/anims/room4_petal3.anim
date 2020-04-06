@@ -1,0 +1,62 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "room4_petal3",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 3.8333333333333335,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "props": {
+      "opacity": [
+        {
+          "frame": 0,
+          "value": 0,
+          "curve": "constant"
+        },
+        {
+          "frame": 2,
+          "value": 255
+        },
+        {
+          "frame": 3,
+          "value": 255
+        },
+        {
+          "frame": 3.8333333333333335,
+          "value": 0
+        }
+      ],
+      "position": [
+        {
+          "frame": 2,
+          "value": [
+            89.1,
+            -8.2
+          ],
+          "motionPath": []
+        },
+        {
+          "frame": 3.8333333333333335,
+          "value": [
+            121,
+            -87.2
+          ],
+          "motionPath": []
+        }
+      ],
+      "angle": [
+        {
+          "frame": 2,
+          "value": 100
+        },
+        {
+          "frame": 3.8333333333333335,
+          "value": 160
+        }
+      ]
+    }
+  },
+  "events": []
+}

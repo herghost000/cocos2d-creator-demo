@@ -1,0 +1,33 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "room4_fish",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.8333333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 22,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            -0.581,
+            -10.448,
+            0
+          ]
+        },
+        {
+          "frame": 1.8333333333333333,
+          "value": [
+            -0.581,
+            -13.871,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}
