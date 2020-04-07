@@ -5,11 +5,16 @@ cc.Class({
     },
 
     onLoad () {
-        
+        this.resize();
+        cc.view.on("canvas-resize", this.resize, this);
     },
 
     start () {
 
+    },
+
+    onDestroy() {
+        cc.view.off("canvas-resize", this.resize, this);
     },
 
     resize() {

@@ -29,8 +29,19 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        // 900 * 460
-        // 460 * 800
+        this.resize();
+        cc.view.on("canvas-resize", this.resize, this);
+    },
+
+    start () {
+
+    },
+
+    onDestroy() {
+        cc.view.off("canvas-resize", this.resize, this);
+    },
+    
+    resize() {
         let scaleForShowAll = Math.min(
             cc.view.getCanvasSize().width / this.node.width, // 0.511
             cc.view.getCanvasSize().height / this.node.height // 1.73
@@ -44,11 +55,5 @@ cc.Class({
             cc.view.getCanvasSize().width / realWidth,
             cc.view.getCanvasSize().height / realHeight
         );
-    },
-
-    start () {
-
-    },
-
-    // update (dt) {},
+    }
 });
