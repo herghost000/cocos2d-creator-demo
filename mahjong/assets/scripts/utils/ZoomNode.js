@@ -13,6 +13,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        this.startZoomV2 = this.node.getScale(cc.v2());
         this.resize();
         cc.view.on("canvas-resize", this.resize, this);
     },
@@ -40,10 +41,12 @@ cc.Class({
         console.log(`画布：${cc.view.getCanvasSize().width} x ${cc.view.getCanvasSize().height}`)
         console.log(`设计：${cc.view.getDesignResolutionSize().width} x ${cc.view.getDesignResolutionSize().height}`)
         console.log(`像素比：${cc.view.getDevicePixelRatio()}`, canvasWidth / (designWidth * canvasHeight / designHeight))
-        if ((canvasWidth / (designWidth * canvasHeight / designHeight)) < 1) {
-            this.node.setScale(canvasWidth / (designWidth * canvasHeight / designHeight));
+        const zoomScale = canvasWidth / (designWidth * canvasHeight / designHeight);
+        const newZoomV2 = cc.v2(this.startZoomV2.x * zoomScale, this.startZoomV2.y * zoomScale);
+        if (zoomScale < 1) {
+            this.node.setScale(newZoomV2);
         } else {
-            this.node.setScale(1)
+            this.node.setScale(this.startZoomV2)
         }
 
         // } else {
