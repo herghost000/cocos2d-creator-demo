@@ -5,7 +5,6 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const A = require('WsRpcClient');
 cc.Class({
     extends: cc.Component,
 
@@ -32,7 +31,7 @@ cc.Class({
     // onLoad () {},
 
     start() {
-        console.log(A.prototype.a.encode('666'))
+
     },
 
     // update (dt) {},

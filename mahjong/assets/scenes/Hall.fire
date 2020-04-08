@@ -85,6 +85,9 @@
       },
       {
         "__id__": 250
+      },
+      {
+        "__id__": 251
       }
     ],
     "_prefab": null,
@@ -12507,5 +12510,18 @@
     "_originalWidth": 1280,
     "_originalHeight": 0,
     "_id": "26oP4bIadGzbUEb7IWEa8Y"
+  },
+  {
+    "__type__": "7c5fbscSQ1My5u83t31R7ho",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "audio": {
+      "__uuid__": "8dfb3685-5685-40c4-acd5-70083eca6e03"
+    },
+    "_id": "a4sO1/KwtBeJBOEK9ZzNyZ"
   }
 ]

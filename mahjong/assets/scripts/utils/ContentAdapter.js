@@ -29,6 +29,6 @@ cc.Class({
         // 2. 基于第一步的数据，再做节点宽高重置
         this.node.width = this.startNodeWidth * (cc.view.getCanvasSize().width / realWidth);
         this.node.height = this.startNodeHeight * (cc.view.getCanvasSize().height / realHeight);
-        console.log(this.node.width, this.node.height, this.startNodeWidth, this.startNodeHeight)
+        // console.log(this.node.width, this.node.height, this.startNodeWidth, this.startNodeHeight)
     }
 });

@@ -29,18 +29,18 @@ cc.Class({
     },
 
     resize() {
-        console.log(`画布：${cc.view.getCanvasSize().width} x ${cc.view.getCanvasSize().height}`)
-        console.log(`设计：${cc.view.getDesignResolutionSize().width} x ${cc.view.getDesignResolutionSize().height}`)
-        console.log(`像素比：${cc.view.getDevicePixelRatio()}`)
+        // console.log(`画布：${cc.view.getCanvasSize().width} x ${cc.view.getCanvasSize().height}`)
+        // console.log(`设计：${cc.view.getDesignResolutionSize().width} x ${cc.view.getDesignResolutionSize().height}`)
+        // console.log(`像素比：${cc.view.getDevicePixelRatio()}`)
         // if (cc.view.getCanvasSize().height > cc.view.getDesignResolutionSize().height) {
         const radio = cc.view.getDevicePixelRatio();
         const canvasWidth = cc.view.getCanvasSize().width / radio;
         const canvasHeight = cc.view.getCanvasSize().height / radio;
         const designWidth = cc.view.getDesignResolutionSize().width;
         const designHeight = cc.view.getDesignResolutionSize().height;
-        console.log(`画布：${cc.view.getCanvasSize().width} x ${cc.view.getCanvasSize().height}`)
-        console.log(`设计：${cc.view.getDesignResolutionSize().width} x ${cc.view.getDesignResolutionSize().height}`)
-        console.log(`像素比：${cc.view.getDevicePixelRatio()}`, canvasWidth / (designWidth * canvasHeight / designHeight))
+        // console.log(`画布：${cc.view.getCanvasSize().width} x ${cc.view.getCanvasSize().height}`)
+        // console.log(`设计：${cc.view.getDesignResolutionSize().width} x ${cc.view.getDesignResolutionSize().height}`)
+        // console.log(`像素比：${cc.view.getDevicePixelRatio()}`, canvasWidth / (designWidth * canvasHeight / designHeight))
         const zoomScale = canvasWidth / (designWidth * canvasHeight / designHeight);
         const newZoomV2 = cc.v2(this.startZoomV2.x * zoomScale, this.startZoomV2.y * zoomScale);
         if (zoomScale < 1) {
