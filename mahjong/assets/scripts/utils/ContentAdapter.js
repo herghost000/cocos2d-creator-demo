@@ -1,15 +1,16 @@
 cc.Class({
     extends: cc.Component,
 
-    properties: {
-    },
+    properties: {},
 
-    onLoad () {
+    onLoad() {
+        this.startNodeWidth = this.node.width;
+        this.startNodeHeight = this.node.height;
         this.resize();
         cc.view.on("canvas-resize", this.resize, this);
     },
 
-    start () {
+    start() {
 
     },
 
@@ -19,14 +20,15 @@ cc.Class({
 
     resize() {
         const srcScaleForShowAll = Math.min(
-            cc.view.getCanvasSize().width / this.node.width,
-            cc.view.getCanvasSize().height / this.node.height
+            cc.view.getCanvasSize().width / this.startNodeWidth,
+            cc.view.getCanvasSize().height / this.startNodeHeight
         );
-        const realWidth = this.node.width * srcScaleForShowAll;
-        const realHeight = this.node.height * srcScaleForShowAll;
+        const realWidth = this.startNodeWidth * srcScaleForShowAll;
+        const realHeight = this.startNodeHeight * srcScaleForShowAll;
 
         // 2. 基于第一步的数据，再做节点宽高重置
-        this.node.width = this.node.width * (cc.view.getCanvasSize().width / realWidth);
-        this.node.height = this.node.height * (cc.view.getCanvasSize().height / realHeight);
+        this.node.width = this.startNodeWidth * (cc.view.getCanvasSize().width / realWidth);
+        this.node.height = this.startNodeHeight * (cc.view.getCanvasSize().height / realHeight);
+        console.log(this.node.width, this.node.height, this.startNodeWidth, this.startNodeHeight)
     }
 });
