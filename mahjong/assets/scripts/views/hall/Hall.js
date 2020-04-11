@@ -55,4 +55,8 @@ cc.Class({
     onTurnBtnClick() {
 
     },
+
+    onToastClick() {
+
+    }
 });
