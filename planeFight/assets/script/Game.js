@@ -71,6 +71,14 @@ cc.Class({
         score: {
             type: cc.Label,
             default: null
+        },
+        curScoreLabel: {
+            type: cc.Label,
+            default: null
+        },
+        hisScoreLabel: {
+            type: cc.Label,
+            default: null
         }
     },
 
@@ -82,7 +90,7 @@ cc.Class({
         this.disableUltBtn();
         this.menu.zIndex = 10;
         this.showMenu();
-
+        this.calcHisHightScore();
         const manager = cc.director.getCollisionManager();
         manager.enabled = true; //开启碰撞检测
         // manager.enabledDebugDraw = true; //显示碰撞检测区域
@@ -152,8 +160,23 @@ cc.Class({
             }
         });
         this.hero.setPosition(this.heroStartPos);
+        this.calcGameScore();
+        this.calcHisHightScore();
         this.clearScore();
         this.showMenu();
+    },
+
+    calcHisHightScore() {
+        let historyHightScore = cc.sys.localStorage.getItem('historyHightScore') || 0;
+        this.hisScoreLabel.string = historyHightScore;
+        if (this.scoreNum > historyHightScore) {
+            this.hisScoreLabel.string = this.scoreNum;
+            cc.sys.localStorage.setItem('historyHightScore', this.scoreNum);
+        }
+    },
+
+    calcGameScore() {
+        this.curScoreLabel.string = this.score.string;
     },
 
     enableUltBtn() {
