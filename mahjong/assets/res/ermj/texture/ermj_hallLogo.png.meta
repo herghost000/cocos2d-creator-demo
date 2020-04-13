@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "6a4e241e-add8-4069-9281-6b56feb20a8c",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 306,
+  "height": 77,
+  "platformSettings": {},
+  "subMetas": {
+    "ermj_hallLogo": {
+      "ver": "1.0.4",
+      "uuid": "c4e8648e-dd35-4d11-933c-3314f9ee1b47",
+      "rawTextureUuid": "6a4e241e-add8-4069-9281-6b56feb20a8c",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 306,
+      "height": 77,
+      "rawWidth": 306,
+      "rawHeight": 77,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
