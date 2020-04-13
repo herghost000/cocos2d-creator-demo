@@ -24,6 +24,7 @@ cc.Class({
     },
 
     onQuitClick() {
+        this.onMenuClick();
         cc.director.loadScene("ErmjHall");
         EventBus.dispatch(ErmjGameMenuConstant.EventType.JUMP_TO_ERMJ_HALL);
     },
