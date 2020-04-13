@@ -1,38 +1,26 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+const ErmjGameMenuConstant = require('ErmjGameMenuConstant');
+const EventBus = require('EventBus')
 
 cc.Class({
     extends: cc.Component,
 
-    properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+    properties: {},
+
+    onLoad() {
+        EventBus.addEventListener(ErmjGameMenuConstant.EventType.JUMP_TO_ERMJ_HALL, this.jumpToErmjHall, this);
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start () {
+    start() {
 
     },
 
     // update (dt) {},
+
+    onDestroy() {
+        EventBus.removeEventListener(ErmjGameMenuConstant.EventType.JUMP_TO_ERMJ_HALL, this.jumpToErmjHall, this);
+    },
+
+    jumpToErmjHall() {
+
+    }
 });

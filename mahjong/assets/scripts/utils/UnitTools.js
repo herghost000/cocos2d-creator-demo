@@ -1,198 +1,182 @@
 /**
  * Created by litengfei on 16/6/13.
  */
-function UnitTools()
-{
+function UnitTools() {
 
 }
-UnitTools.isNullOrUndefined = function(value)
-{
-    if(typeof  value == "undefined")return true;
-    if(value == null)return true;
+UnitTools.isNullOrUndefined = function (value) {
+    if (typeof value == "undefined") return true;
+    if (value == null) return true;
     return false;
 }
-UnitTools.isUndefined = function(value)
-{
-    if(typeof  value == "undefined")return true;
+UnitTools.isUndefined = function (value) {
+    if (typeof value == "undefined") return true;
     return false;
 }
-UnitTools.isFunction = function(value)
-{
-    if(typeof value != "function")return false;
+UnitTools.isFunction = function (value) {
+    if (typeof value != "function") return false;
     return true;
 }
-UnitTools.isJson = function(value)
-{
-    if(typeof  value != "object")return false;
+UnitTools.isJson = function (value) {
+    if (typeof value != "object") return false;
     return true;
 }
-UnitTools.isArray = function(value)
-{
-    if(value instanceof Array)return true;
+UnitTools.isArray = function (value) {
+    if (value instanceof Array) return true;
     return false;
 }
 
 
 
-UnitTools.getJsonKeys = function(json)
-{
-    if(UnitTools.isJson(json)==false)
-    {
+UnitTools.getJsonKeys = function (json) {
+    if (UnitTools.isJson(json) == false) {
         throw new Error("getJsonKeys must be json");
     }
     var names = [];
-    for(var key in json)
-    {
+    for (var key in json) {
         names.push(key);
     }
     return names;
 }
 
-UnitTools.getJsonValues = function(json){
-    if(UnitTools.isJson(json)==false) {
+UnitTools.getJsonValues = function (json) {
+    if (UnitTools.isJson(json) == false) {
         throw new Error("getJsonvalues must be json");
     }
-    var values =[];
-    for(var key in json){
+    var values = [];
+    for (var key in json) {
         values.push(json[key]);
     }
     return values;
 }
 
 UnitTools.getJsonValues = function (cb) {
-    try{
+    try {
         return cb()
-    }catch (e){
+    } catch (e) {
         return null;
     }
 }
 
 
-UnitTools.getJsonLength = function(json){
-    if(UnitTools.isJson(json)==false) {
+UnitTools.getJsonLength = function (json) {
+    if (UnitTools.isJson(json) == false) {
         throw new Error("getJsonLength must be json");
     }
     var index = 0;
-    for(var key in json) {
-       index+=1;
+    for (var key in json) {
+        index += 1;
     }
     return index;
 }
 
 
-UnitTools.getOrCreateArrayInJson = function(key,ob)
-{
-    if(UnitTools.isJson(ob) === false){return null};
+UnitTools.getOrCreateArrayInJson = function (key, ob) {
+    if (UnitTools.isJson(ob) === false) {
+        return null
+    };
     var value = ob[key];
-    if(UnitTools.isArray(value) === false)
-    {
+    if (UnitTools.isArray(value) === false) {
         value = ob[key] = [];
     }
     return value;
 }
 
-UnitTools.getOrCreateJsonInJson = function(key,ob){
-    if(UnitTools.isJson(ob) === false){return null};
+UnitTools.getOrCreateJsonInJson = function (key, ob) {
+    if (UnitTools.isJson(ob) === false) {
+        return null
+    };
     var value = ob[key];
-    if(UnitTools.isJson(value) === false)
-    {
+    if (UnitTools.isJson(value) === false) {
         value = ob[key] = {};
     }
     return value;
 }
 
-UnitTools.jsonToArray = function(json,sortFunc){//json转换为array
-    if(UnitTools.isJson(json) == false)return [];
+UnitTools.jsonToArray = function (json, sortFunc) { //json转换为array
+    if (UnitTools.isJson(json) == false) return [];
     var arr = [];
-    for(var key in json){
+    for (var key in json) {
         arr.push(json[key]);
     }
-    if(UnitTools.isFunction(sortFunc) == false)return arr;
+    if (UnitTools.isFunction(sortFunc) == false) return arr;
     arr.sort(sortFunc);
     return arr;
 }
 
 
 
-UnitTools.hasKey = function(ob,key)
-{
-    if(UnitTools.isUndefined(ob[key]))return false;
+UnitTools.hasKey = function (ob, key) {
+    if (UnitTools.isUndefined(ob[key])) return false;
     return true;
 }
 
-UnitTools.arrayHasValue = function(value,ar){
-    if(!UnitTools.isArray(ar))return false;
-    for(var index in ar){
+UnitTools.arrayHasValue = function (value, ar) {
+    if (!UnitTools.isArray(ar)) return false;
+    for (var index in ar) {
         var item = ar[index];
-        if(item ==value)return true;
+        if (item == value) return true;
     }
     return false;
 }
 
-UnitTools.getArrayValueIndex = function(arr,value){
-    if(!UnitTools.isArray(arr))return -1;
+UnitTools.getArrayValueIndex = function (arr, value) {
+    if (!UnitTools.isArray(arr)) return -1;
     var findIndex = -1;
-    for(var index in arr){
+    for (var index in arr) {
         var val = arr[index];
-        if(value == val){
+        if (value == val) {
             findIndex = index;
             break;
         }
     }
     return findIndex;
 }
-UnitTools.remove = function(ob,key)
-{
+UnitTools.remove = function (ob, key) {
     delete ob[key];
 }
 
-UnitTools.removeArray = function(arr,removeArr){
-    if(!UnitTools.isArray(arr)||!UnitTools.isArray(removeArr))return;
-    UnitTools.forEach(removeArr,function(index,value){
-        var findIndex = UnitTools.getArrayValueIndex(arr,value);
-        if(findIndex!=-1)arr.splice(findIndex,1);
+UnitTools.removeArray = function (arr, removeArr) {
+    if (!UnitTools.isArray(arr) || !UnitTools.isArray(removeArr)) return;
+    UnitTools.forEach(removeArr, function (index, value) {
+        var findIndex = UnitTools.getArrayValueIndex(arr, value);
+        if (findIndex != -1) arr.splice(findIndex, 1);
     });
 }
 
-UnitTools.attachJson = function(orgin,attch){
-    if(!(UnitTools.isJson(orgin) && UnitTools.isJson(attch)))return;
-    UnitTools.forEach(attch,function(key,value){
+UnitTools.attachJson = function (orgin, attch) {
+    if (!(UnitTools.isJson(orgin) && UnitTools.isJson(attch))) return;
+    UnitTools.forEach(attch, function (key, value) {
         orgin[key] = value;
     });
 }
 
-UnitTools.forEach = function(data,itemCallback)
-{
-    try{
+UnitTools.forEach = function (data, itemCallback) {
+    try {
 
-    }catch(e){
+    } catch (e) {
         //cc.log(e.message);
         var a;
     }
 
-    if(UnitTools.isFunction(itemCallback) == false)
-    {
-        throw  new Error("UnitTools.forEach itemCallback must be a function");
+    if (UnitTools.isFunction(itemCallback) == false) {
+        throw new Error("UnitTools.forEach itemCallback must be a function");
     }
-    if(UnitTools.isArray(data) || UnitTools.isJson(data))
-    {
-        for(var key in data)
-        {
-            itemCallback(key,data[key]);
+    if (UnitTools.isArray(data) || UnitTools.isJson(data)) {
+        for (var key in data) {
+            itemCallback(key, data[key]);
         }
     }
 }
 
 
 
-UnitTools.now = function()
-{
+UnitTools.now = function () {
     return new Date().getTime();
 }
 
-UnitTools.getFuncArgs = function(func)
-{
-    if(UnitTools.isNullOrUndefined(func))return;
+UnitTools.getFuncArgs = function (func) {
+    if (UnitTools.isNullOrUndefined(func)) return;
     //var args = func.toString().match(/function\s.*?\(([^)]*)\)/)[1];
     //return args.split(",").map(function(arg) {
     //    return arg.replace(/\/\*.*\*\//, "").trim();
@@ -202,57 +186,52 @@ UnitTools.getFuncArgs = function(func)
     return func.length;
 }
 
-UnitTools.genID = function()
-{
+UnitTools.genID = function () {
     var id = "";
-    for(var i = 0;i<8;i++)
-    {
-        id+=(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    for (var i = 0; i < 8; i++) {
+        id += (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     }
     return id.toLowerCase();
 }
 
-UnitTools.genShortID = function(){
+UnitTools.genShortID = function () {
     var id = "";
-    for(var i = 0;i<6;i++){
-        id+=UnitTools.random(0,9);
+    for (var i = 0; i < 6; i++) {
+        id += UnitTools.random(0, 9);
     }
     return id;
 }
 
-UnitTools.isTimeOut = function(from,timeOut)
-{
+UnitTools.isTimeOut = function (from, timeOut) {
     var delta = Date.now() - from;
-    if(delta >=timeOut)return true;
+    if (delta >= timeOut) return true;
 }
 
-UnitTools.formatStr = function(str)
-{
-    if( arguments.length == 0 )
+UnitTools.formatStr = function (str) {
+    if (arguments.length == 0)
         return null;
     var str = arguments[0];
-    for(var i=1;i<arguments.length;i++) {
-        var re = new RegExp('\\{' + (i-1) + '\\}','gm');
+    for (var i = 1; i < arguments.length; i++) {
+        var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
         str = str.replace(re, arguments[i]);
     }
     return str;
 }
 
-UnitTools.random = function(minNum,maxNum)
-{
+UnitTools.random = function (minNum, maxNum) {
     var length = maxNum - minNum;
-    var random = Math.floor(Math.random()*(length+1));
-    return minNum +random;
+    var random = Math.floor(Math.random() * (length + 1));
+    return minNum + random;
 }
 
-UnitTools.load = function (url, cb,timeOut) {
+UnitTools.load = function (url, cb, timeOut) {
     try {
         var response = false;
-        setTimeout(function(){
-            if(response == false){
-                cb(new Error("超时了"),null);
+        setTimeout(function () {
+            if (response == false) {
+                cb(new Error("超时了"), null);
             }
-        },timeOut);
+        }, timeOut);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 400) {
@@ -268,25 +247,25 @@ UnitTools.load = function (url, cb,timeOut) {
     }
 };
 
-UnitTools.request = function (url,dataJson,cb,timeOut) {
+UnitTools.request = function (url, dataJson, cb, timeOut) {
     var dataStr = "";
     var firstEnter = true;
-    for(var key in dataJson){
-        if(!firstEnter)dataStr+="&";
+    for (var key in dataJson) {
+        if (!firstEnter) dataStr += "&";
         firstEnter = false;
         var value = dataJson[key];
-        dataStr+=key;
-        dataStr+="=";
-        dataStr+=value;
+        dataStr += key;
+        dataStr += "=";
+        dataStr += value;
     }
 
     try {
         var response = false;
-        setTimeout(function(){
-            if(response == false){
-                cb(new Error("超时了"),null);
+        setTimeout(function () {
+            if (response == false) {
+                cb(new Error("超时了"), null);
             }
-        },timeOut);
+        }, timeOut);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 400) {
@@ -295,7 +274,7 @@ UnitTools.request = function (url,dataJson,cb,timeOut) {
                 cb(null, response);
             }
         };
-        var finalUrl = dataStr==""?url:url+"?"+dataStr;
+        var finalUrl = dataStr == "" ? url : url + "?" + dataStr;
         finalUrl = encodeURI(finalUrl);
         xhr.open("GET", finalUrl, true);
         xhr.send();
@@ -314,7 +293,7 @@ UnitTools.checkMobile = function (str) {
     }
 }
 
-UnitTools.checkSpecialChar = function(e){
+UnitTools.checkSpecialChar = function (e) {
     var re = /[~#^$@%&!*()<>:;'"{}【】  ]/gi;
     if (re.test(e)) {
         return true;
@@ -323,8 +302,8 @@ UnitTools.checkSpecialChar = function(e){
 }
 
 UnitTools.changeToNum2 = function (num) {
-    if(num.toString().length == 1){
-        return "0"+num;
+    if (num.toString().length == 1) {
+        return "0" + num;
     }
     return num;
 }
@@ -336,7 +315,7 @@ UnitTools.base64 = function (str) {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
         52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
-        -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+        -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
         15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
         -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
         41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
@@ -348,28 +327,26 @@ UnitTools.base64 = function (str) {
         len = str.length;
         i = 0;
         out = "";
-        while(i < len) {
+        while (i < len) {
             c1 = str.charCodeAt(i++) & 0xff;
-            if(i == len)
-            {
+            if (i == len) {
                 out += base64EncodeChars.charAt(c1 >> 2);
                 out += base64EncodeChars.charAt((c1 & 0x3) << 4);
                 out += "==";
                 break;
             }
             c2 = str.charCodeAt(i++);
-            if(i == len)
-            {
+            if (i == len) {
                 out += base64EncodeChars.charAt(c1 >> 2);
-                out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+                out += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
                 out += base64EncodeChars.charAt((c2 & 0xF) << 2);
                 out += "=";
                 break;
             }
             c3 = str.charCodeAt(i++);
             out += base64EncodeChars.charAt(c1 >> 2);
-            out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-            out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6));
+            out += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+            out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
             out += base64EncodeChars.charAt(c3 & 0x3F);
         }
         return out;
@@ -385,10 +362,11 @@ UnitTools.deBase64 = function (str) {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
         52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
-        -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+        -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
         15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
         -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
         41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+
     function base64decode(str) {
         var c1, c2, c3, c4;
         var i, len, out;
@@ -396,19 +374,19 @@ UnitTools.deBase64 = function (str) {
         len = str.length;
         i = 0;
         out = "";
-        while(i < len) {
+        while (i < len) {
             /* c1 */
             do {
                 c1 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
-            } while(i < len && c1 == -1);
-            if(c1 == -1)
+            } while (i < len && c1 == -1);
+            if (c1 == -1)
                 break;
 
             /* c2 */
             do {
                 c2 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
-            } while(i < len && c2 == -1);
-            if(c2 == -1)
+            } while (i < len && c2 == -1);
+            if (c2 == -1)
                 break;
 
             out += String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
@@ -416,11 +394,11 @@ UnitTools.deBase64 = function (str) {
             /* c3 */
             do {
                 c3 = str.charCodeAt(i++) & 0xff;
-                if(c3 == 61)
+                if (c3 == 61)
                     return out;
                 c3 = base64DecodeChars[c3];
-            } while(i < len && c3 == -1);
-            if(c3 == -1)
+            } while (i < len && c3 == -1);
+            if (c3 == -1)
                 break;
 
             out += String.fromCharCode(((c2 & 0XF) << 4) | ((c3 & 0x3C) >> 2));
@@ -428,11 +406,11 @@ UnitTools.deBase64 = function (str) {
             /* c4 */
             do {
                 c4 = str.charCodeAt(i++) & 0xff;
-                if(c4 == 61)
+                if (c4 == 61)
                     return out;
                 c4 = base64DecodeChars[c4];
-            } while(i < len && c4 == -1);
-            if(c4 == -1)
+            } while (i < len && c4 == -1);
+            if (c4 == -1)
                 break;
             out += String.fromCharCode(((c3 & 0x03) << 6) | c4);
         }
